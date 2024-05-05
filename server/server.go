@@ -192,6 +192,7 @@ func (s *Server) initRoutes() {
 		r.Use(requestLogger)
 		s.router = r
 	})
+	r.Mount(path.Join(conf.Server.BasePath, "/debug"), middleware.Profiler())		
 }
 
 func (s *Server) mountAuthenticationRoutes() chi.Router {
