@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -35,7 +36,7 @@ func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) m
 		}
 
 		cacheMetrics := r.cache.GetMetrics()
-		log.Info(ctx, "GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted)
+		log.Info(ctx, fmt.Sprintf("GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
 
 		instance = r
 	})
