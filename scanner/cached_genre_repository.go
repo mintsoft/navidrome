@@ -17,7 +17,6 @@ var once sync.Once
 
 func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) model.GenreRepository {
 	once.Do(func() {
-
 		r := &cachedGenreRepo{
 			GenreRepository: repo,
 			ctx:             ctx,
