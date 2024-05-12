@@ -26,6 +26,9 @@ func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) m
 		_ = r.cache.Set(strings.ToLower(g.Name), g.ID)
 	}
 
+	cacheMetrics := r.cache.GetMetrics()
+	log.Info(ctx, "GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted)
+
 	return r
 }
 
