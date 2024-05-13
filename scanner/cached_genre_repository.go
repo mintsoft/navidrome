@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"strings"
-	"sync"
 	"time"
 
 	"github.com/jellydator/ttlcache/v2"
@@ -13,32 +12,32 @@ import (
 )
 
 var instance *cachedGenreRepo
-var once sync.Once
 
 func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) model.GenreRepository {
-	once.Do(func() {
-		r := &cachedGenreRepo{
-			GenreRepository: repo,
-			ctx:             ctx,
-		}
-		genres, err := repo.GetAll()
 
-		if err != nil {
-			log.Error(ctx, "Could not load genres from DB", err)
-			//	return repo
-			return
-		}
+	if instance != nil {
+		cacheMetrics := instance.cache.GetMetrics()
+		log.Info(ctx, "returning GenreCache Instance : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted)
+		return instance.GenreRepository
+	}
+	r := &cachedGenreRepo{
+		GenreRepository: repo,
+		ctx:             ctx,
+	}
+	genres, err := repo.GetAll()
 
-		r.cache = ttlcache.NewCache()
-		for _, g := range genres {
-			_ = r.cache.Set(strings.ToLower(g.Name), g.ID)
-		}
+	if err != nil {
+		log.Error(ctx, "Could not load genres from DB", err)
+		return repo
+	}
+	r.cache = ttlcache.NewCache()
+	for _, g := range genres {
+		_ = r.cache.Set(strings.ToLower(g.Name), g.ID)
+	}
+	cacheMetrics := r.cache.GetMetrics()
+	log.Info(ctx, fmt.Sprintf("GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
 
-		cacheMetrics := r.cache.GetMetrics()
-		log.Info(ctx, fmt.Sprintf("GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
-
-		instance = r
-	})
+	instance = r
 
 	return instance.GenreRepository
 }
