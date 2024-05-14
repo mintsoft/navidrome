@@ -14,10 +14,9 @@ import (
 var instance *cachedGenreRepo
 
 func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) model.GenreRepository {
-
 	if instance != nil {
 		cacheMetrics := instance.cache.GetMetrics()
-		log.Info(ctx, "returning GenreCache Instance : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted)
+		log.Info(ctx, fmt.Sprintf("returning GenreCache Instance : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
 		return instance.GenreRepository
 	}
 	r := &cachedGenreRepo{
