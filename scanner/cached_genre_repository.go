@@ -2,43 +2,33 @@ package scanner
 
 import (
 	"context"
-	"fmt"
 	"strings"
 	"time"
 
 	"github.com/jellydator/ttlcache/v2"
 	"github.com/navidrome/navidrome/log"
 	"github.com/navidrome/navidrome/model"
+	"github.com/navidrome/navidrome/utils/singleton"
 )
 
-var instance *cachedGenreRepo
-
 func newCachedGenreRepository(ctx context.Context, repo model.GenreRepository) model.GenreRepository {
-	if instance != nil {
-		cacheMetrics := instance.cache.GetMetrics()
-		log.Info(ctx, fmt.Sprintf("returning GenreCache Instance : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
-		return instance.GenreRepository
-	}
-	r := &cachedGenreRepo{
-		GenreRepository: repo,
-		ctx:             ctx,
-	}
-	genres, err := repo.GetAll()
+	return singleton.GetInstance(func() *cachedGenreRepo {
+		r := &cachedGenreRepo{
+			GenreRepository: repo,
+			ctx:             ctx,
+		}
+		genres, err := repo.GetAll()
 
-	if err != nil {
-		log.Error(ctx, "Could not load genres from DB", err)
-		return repo
-	}
-	r.cache = ttlcache.NewCache()
-	for _, g := range genres {
-		_ = r.cache.Set(strings.ToLower(g.Name), g.ID)
-	}
-	cacheMetrics := r.cache.GetMetrics()
-	log.Info(ctx, fmt.Sprintf("GenreCache Contains : Inserted: %d, Retrievals: %d, Hits %d, Misses %d, Evicted %d", cacheMetrics.Inserted, cacheMetrics.Retrievals, cacheMetrics.Hits, cacheMetrics.Misses, cacheMetrics.Evicted))
-
-	instance = r
-
-	return instance.GenreRepository
+		if err != nil {
+			log.Error(ctx, "Could not load genres from DB", err)
+			panic(err)
+		}
+		r.cache = ttlcache.NewCache()
+		for _, g := range genres {
+			_ = r.cache.Set(strings.ToLower(g.Name), g.ID)
+		}
+		return r
+	})
 }
 
 type cachedGenreRepo struct {
