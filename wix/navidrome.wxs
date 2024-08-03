@@ -54,24 +54,26 @@
 			</Component>
 
 			<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
-			  <IniFile Id="ConfigurationPort" Name="navidrome.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="Section" Value="[NAVIDROME_PORT]" />
-			  <IniFile Id="ConfigurationMusicDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicDir" Section="Section" Value="[NAVIDROME_MUSICDIR]" />
-			  <IniFile Id="ConfigurationDataDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="DataDir" Section="Section" Value="[NAVIDROME_DATADIR]" />
+			  <IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_PORT]" />
+			  <IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicDir" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_MUSICDIR]" />
+			  <IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataDir" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_DATADIR]" />
 			</Component>
 
 		  </Directory>
 	  </Directory>
 	</Directory>
 
-	<UI Id="NavidromeUI_InstallDir">
-		<UIRef Id="WixUI_Minimal" />
-	</UI>
+	<CustomAction Id="HackIniIntoTOML" Directory="INSTALLDIR" Execute="commit" ExeCommand='cmd.exe /c findstr /V "[MSI_PLACEHOLDER_SECTION]" navidrome.tmp.toml &gt; navidrome.toml' />
+
+	<InstallExecuteSequence>
+		<Custom Action="HackIniIntoTOML" After="InstallFinalize" />
+	</InstallExecuteSequence>
 
 	<Feature Id='Complete' Level='1'>
 	  <ComponentRef Id='MainExecutable' />
 	  <ComponentRef Id='LICENSEFile' />
 	  <ComponentRef Id='README.mdFile' />
-	 <ComponentRef Id='Configuration'/>
+	  <ComponentRef Id='Configuration'/>
 	</Feature>
   </Product>
 </Wix>
