@@ -63,7 +63,7 @@
 	  </Directory>
 	</Directory>
 
-	<CustomAction Id="HackIniIntoTOML" Directory="INSTALLDIR" Execute="commit" ExeCommand='cmd.exe /c findstr /V "[MSI_PLACEHOLDER_SECTION]" navidrome.tmp.toml &gt; navidrome.toml' />
+	<CustomAction Id="HackIniIntoTOML" Directory="INSTALLDIR" Execute="commit" ExeCommand='cmd.exe /c findstr /V "MSI_PLACEHOLDER_SECTION" navidrome.tmp.toml &gt; navidrome.toml' />
 
 	<InstallExecuteSequence>
 		<Custom Action="HackIniIntoTOML" After="InstallFinalize" />
