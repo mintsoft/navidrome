@@ -64,7 +64,7 @@
 	</Directory>
 	
 	<Property Id="CMDLOCATION" Value="C:\Windows\System32\cmd.exe" />
-	<CustomAction Id="HackIniIntoTOML" Directory="INSTALLDIR" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c &quot;echo lolz&quot;' />
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot;' />
 
 	<InstallExecuteSequence>
 		<Custom Action="HackIniIntoTOML" After="WriteIniValues" />
