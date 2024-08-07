@@ -11,6 +11,7 @@
 	<?define Win64 = "no" ?>
 <?endif ?>
 <Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+<?include SettingsDlg.wxs?>
   <Product Name="$(var.ProductName)" Id="*" UpgradeCode="$(var.UpgradeCode)" Language='1033' Codepage='1252' Version='$(var.Version)' Manufacturer='Deluan'>
 
 	<Package Id='*' Keywords='Installer' Description="$(var.ProductName)" Comments='' Manufacturer='Deluan' InstallerVersion='200' Languages='1033' Compressed='yes' SummaryCodepage='1252' InstallScope='perMachine' />
@@ -26,7 +27,7 @@
 	<Property Id="NAVIDROME_DATADIR" Value="C:\ProgramData\Navidrome" />
 
 	<UIRef Id="WixUI_Minimal"/>
-
+	
 	<Directory Id='TARGETDIR' Name='SourceDir'>
 		<Directory Id="$(var.PlatformProgramFilesFolder)">
 			<Directory Id='INSTALLDIR' Name='Navidrome'>
@@ -67,6 +68,10 @@
 	
 	<Property Id="CMDLOCATION" Value="C:\Windows\System32\cmd.exe" />
 	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot;' />
+
+	<InstallUISequence>
+		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
+	</InstallUISequence>
 
 	<InstallExecuteSequence>
 		<Custom Action="HackIniIntoTOML" After="WriteIniValues" />
