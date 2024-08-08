@@ -32,10 +32,6 @@
 		<Directory Id="$(var.PlatformProgramFilesFolder)">
 			<Directory Id='INSTALLDIR' Name='Navidrome'>
 
-				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
-					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
-				</Component>
-				
 				<Component Id='LICENSEFile' Guid='aee053cf-73c2-4fed-b7e5-bc76e34797e6' Win64="$(var.Win64)">
 					<File Id='LICENSE' Name='LICENSE' DiskId='1' Source='LICENSE' KeyPath='yes' />
 				</Component>
@@ -46,11 +42,11 @@
 
 				<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
 					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_PORT]" />
-					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicDir" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_MUSICDIR]" />
-					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataDir" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_DATADIR]" />
+					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_MUSICDIR]" />
+					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_DATADIR]" />
 				</Component>
-
-				<Component Id="NavidromeService" Guid="c8051a0d-e381-4d1e-b475-9a151b1617a3" Win64="$(var.Win64)">
+				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
+					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
 					<ServiceInstall
 						Description='Navidrome - Your Personal Streaming Service'
 						ErrorControl='ignore'
@@ -62,12 +58,13 @@
 					/>
 					<ServiceControl Id='StartNavidromeService' Start='install' Stop='both' Remove='uninstall' Name='$(var.ProductName)' Wait='yes' />
 				</Component>
+
 			</Directory>
 		</Directory>
 	</Directory>
 	
 	<Property Id="CMDLOCATION" Value="C:\Windows\System32\cmd.exe" />
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot;' />
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot; &amp; del &quot;[INSTALLDIR]navidrome.tmp.toml&quot;' />
 
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
@@ -78,11 +75,10 @@
 	</InstallExecuteSequence>
 
 	<Feature Id='Complete' Level='1'>
-		<ComponentRef Id='MainExecutable' />
 		<ComponentRef Id='LICENSEFile' />
 		<ComponentRef Id='README.mdFile' />
 		<ComponentRef Id='Configuration'/>
-		<!--<ComponentRef Id='NavidromeService'/>-->
+		<ComponentRef Id='MainExecutable' />
 	</Feature>
   </Product>
 </Wix>

@@ -15,7 +15,7 @@
         <!--Properties-->
         
         <!-- Install directory -->
-        <Control Id="NameLabel1" Type="Text" X="30" Y="60" Width="100" Height="15" TabSkip="no" Text="&amp;Installation Directory:" />
+        <Control Id="NameLabel1" Type="Text" X="30" Y="60" Width="100" Height="15" TabSkip="no" Text="&amp;Installation Folder:" />
         <Control Id="NameEdit1" Type="Edit" X="30" Y="75" Width="220" Height="18" Property="INSTALLDIR" Text="[INSTALLDIR]" />
 
         <!-- NAVIDROME_PORT -->
@@ -23,11 +23,11 @@
         <Control Id="NameEdit2" Type="Edit" X="30" Y="108" Width="220" Height="18" Property="NAVIDROME_PORT" Text="[NAVIDROME_PORT]" />
 
         <!-- NAVIDROME_MUSICDIR -->
-        <Control Id="NameLabel3" Type="Text" X="30" Y="126" Width="100" Height="15" TabSkip="no" Text="&amp;Music Directory:" />
+        <Control Id="NameLabel3" Type="Text" X="30" Y="126" Width="100" Height="15" TabSkip="no" Text="&amp;Music Folder:" />
         <Control Id="NameEdit3" Type="Edit" X="30" Y="141" Width="220" Height="18" Property="NAVIDROME_MUSICDIR" Text="[NAVIDROME_MUSICDIR]" />
 
         <!-- NAVIDROME_DATADIR -->
-        <Control Id="NameLabel4" Type="Text" X="30" Y="159" Width="100" Height="15" TabSkip="no" Text="&amp;Data Directory:" />
+        <Control Id="NameLabel4" Type="Text" X="30" Y="159" Width="100" Height="15" TabSkip="no" Text="&amp;Data Folder:" />
         <Control Id="NameEdit5" Type="Edit" X="30" Y="174" Width="220" Height="18" Property="NAVIDROME_DATADIR" Text="[NAVIDROME_DATADIR]" />
 
         <!--Footer-->
