@@ -41,9 +41,9 @@
 				</Component>
 
 				<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
-					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_PORT]" />
-					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_MUSICDIR]" />
-					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="[NAVIDROME_DATADIR]" />
+					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_PORT]&quot;" />
+					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_MUSICDIR]&quot;" />
+					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_DATADIR]&quot;" />
 				</Component>
 				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
 					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
@@ -64,7 +64,7 @@
 	</Directory>
 	
 	<Property Id="CMDLOCATION" Value="C:\Windows\System32\cmd.exe" />
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot; &amp; del &quot;[INSTALLDIR]navidrome.tmp.toml&quot;' />
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c IF NOT EXIST &quot;[INSTALLDIR]navidrome.toml&quot; findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot; &amp; del &quot;[INSTALLDIR]navidrome.tmp.toml&quot;' />
 
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
