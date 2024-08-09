@@ -26,12 +26,6 @@
 	<Property Id="ND_MUSICFOLDER" Value="C:\Music" />
 	<Property Id="ND_DATAFOLDER" Value="C:\ProgramData\Navidrome" />
 
-	<Property Id="NAVIDROME_DEFAULT_INSTALL_PATH_EXISTS" >
-  		<DirectorySearch Path="[INSTALLDIR]" Depth="0" Id="TempFolderDirectorySearcher">
-    		<FileSearch Name="navidrome.toml"/>
-  		</DirectorySearch>
-	</Property>
-
 	<UIRef Id="WixUI_Minimal"/>
 	
 	<Directory Id='TARGETDIR' Name='SourceDir'>
@@ -51,6 +45,7 @@
 					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_MUSICFOLDER]&quot;" />
 					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_DATAFOLDER]&quot;" />
 				</Component>
+
 				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
 					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
 					<ServiceInstall

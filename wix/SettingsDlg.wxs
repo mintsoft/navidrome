@@ -20,15 +20,15 @@
 
         <!-- NAVIDROME_PORT -->
         <Control Id="NameLabel2" Type="Text" X="30" Y="93" Width="100" Height="15" TabSkip="no" Text="&amp;Port:" />
-        <Control Id="NameEdit2" Type="Edit" X="30" Y="108" Width="220" Height="18" Property="NAVIDROME_PORT" Text="[ND_PORT]" />
+        <Control Id="NameEdit2" Type="Edit" X="30" Y="108" Width="220" Height="18" Property="ND_PORT" Text="[ND_PORT]" />
 
         <!-- NAVIDROME_MUSICDIR -->
         <Control Id="NameLabel3" Type="Text" X="30" Y="126" Width="100" Height="15" TabSkip="no" Text="&amp;Music Folder:" />
-        <Control Id="NameEdit3" Type="Edit" X="30" Y="141" Width="220" Height="18" Property="NAVIDROME_MUSICDIR" Text="[ND_MUSICFOLDER]" />
+        <Control Id="NameEdit3" Type="Edit" X="30" Y="141" Width="220" Height="18" Property="ND_MUSICFOLDER" Text="[ND_MUSICFOLDER]" />
 
         <!-- NAVIDROME_DATADIR -->
         <Control Id="NameLabel4" Type="Text" X="30" Y="159" Width="100" Height="15" TabSkip="no" Text="&amp;Data Folder:" />
-        <Control Id="NameEdit5" Type="Edit" X="30" Y="174" Width="220" Height="18" Property="NAVIDROME_DATADIR" Text="[ND_DATAFOLDER]" />
+        <Control Id="NameEdit5" Type="Edit" X="30" Y="174" Width="220" Height="18" Property="ND_DATAFOLDER" Text="[ND_DATAFOLDER]" />
 
         <!--Footer-->
         <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
