@@ -27,6 +27,8 @@
 	<Property Id="ND_DATAFOLDER" Value="C:\ProgramData\Navidrome" />
 
 	<UIRef Id="WixUI_Minimal"/>
+
+	<Property Id="CSCRIPT_LOCATION" Value="C:\Windows\System32\cscript.exe" />
 	
 	<Directory Id='TARGETDIR' Name='SourceDir'>
 		<Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -40,10 +42,14 @@
 					<File Id='README.md' Name='README.md' DiskId='1' Source='README.md' KeyPath='yes' />
 				</Component>
 
+				<Component Id='replace.vbsFile' Guid='8f3a9da9-fa7c-4084-84d8-381dcbe05c83' Win64="$(var.Win64)">
+					<File Id='replace.vbs' Name='replace.vbs' DiskId='1' Source='replace.vbs' KeyPath='yes' />
+				</Component>
+
 				<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
-					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_PORT]&quot;" />
-					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_MUSICFOLDER]&quot;" />
-					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_DATAFOLDER]&quot;" />
+					<IniFile Id="ConfigurationPort" Name="navidrome.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_PORT]&quot;" />
+					<IniFile Id="ConfigurationMusicDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_MUSICFOLDER]&quot;" />
+					<IniFile Id="ConfigurationDataDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_DATAFOLDER]&quot;" />
 				</Component>
 
 				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
@@ -64,8 +70,8 @@
 		</Directory>
 	</Directory>
 	
-	<Property Id="CMDLOCATION" Value="C:\Windows\System32\cmd.exe" />
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CMDLOCATION" Execute="deferred" ExeCommand='/c IF NOT EXIST &quot;[INSTALLDIR]navidrome.toml&quot; findstr /V MSI_PLACEHOLDER_SECTION &quot;[INSTALLDIR]navidrome.tmp.toml&quot; &gt; &quot;[INSTALLDIR]navidrome.toml&quot; &amp; del &quot;[INSTALLDIR]navidrome.tmp.toml&quot;' />
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]\navidrome.toml&quot;'/>
+	
 
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
@@ -76,6 +82,7 @@
 	</InstallExecuteSequence>
 
 	<Feature Id='Complete' Level='1'>
+		<ComponentRef Id='replace.vbsFile' />
 		<ComponentRef Id='LICENSEFile' />
 		<ComponentRef Id='README.mdFile' />
 		<ComponentRef Id='Configuration'/>
