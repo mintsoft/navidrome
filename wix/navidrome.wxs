@@ -22,9 +22,15 @@
 	<Property Id='DiskPrompt' Value="Navidrome Install [1]" />
 	<Property Id="REBOOT" Value="ReallySuppress" />
 
-	<Property Id="NAVIDROME_PORT" Value="8585" />
-	<Property Id="NAVIDROME_MUSICDIR" Value="C:\Music" />
-	<Property Id="NAVIDROME_DATADIR" Value="C:\ProgramData\Navidrome" />
+	<Property Id="ND_PORT" Value="8585" />
+	<Property Id="ND_MUSICFOLDER" Value="C:\Music" />
+	<Property Id="ND_DATAFOLDER" Value="C:\ProgramData\Navidrome" />
+
+	<Property Id="NAVIDROME_DEFAULT_INSTALL_PATH_EXISTS" >
+  		<DirectorySearch Path="[INSTALLDIR]" Depth="0" Id="TempFolderDirectorySearcher">
+    		<FileSearch Name="navidrome.toml"/>
+  		</DirectorySearch>
+	</Property>
 
 	<UIRef Id="WixUI_Minimal"/>
 	
@@ -41,9 +47,9 @@
 				</Component>
 
 				<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
-					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_PORT]&quot;" />
-					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_MUSICDIR]&quot;" />
-					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[NAVIDROME_DATADIR]&quot;" />
+					<IniFile Id="ConfigurationPort" Name="navidrome.tmp.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_PORT]&quot;" />
+					<IniFile Id="ConfigurationMusicDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_MUSICFOLDER]&quot;" />
+					<IniFile Id="ConfigurationDataDir" Name="navidrome.tmp.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_DATAFOLDER]&quot;" />
 				</Component>
 				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
 					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
