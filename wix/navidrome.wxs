@@ -28,7 +28,7 @@
 
 	<UIRef Id="WixUI_Minimal"/>
 
-	<Property Id="CSCRIPT_LOCATION" Value="[WindowsFolder]\System32\cscript.exe" />
+	<Property Id="CSCRIPT_LOCATION" Value="C:\Windows\System32\cscript.exe" />
 	
 	<Directory Id='TARGETDIR' Name='SourceDir'>
 		<Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -70,7 +70,7 @@
 		</Directory>
 	</Directory>
 	
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]\navidrome.toml&quot;'/>
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;'/>
 	
 
 	<InstallUISequence>
