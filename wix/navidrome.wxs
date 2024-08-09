@@ -72,7 +72,6 @@
 	
 	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;'/>
 	
-
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
 	</InstallUISequence>
