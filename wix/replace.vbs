@@ -9,7 +9,6 @@ sFileContent = oFile.ReadAll
 oFile.Close
 
 sNewFileContent = Replace(sFileContent, "[MSI_PLACEHOLDER_SECTION]" & vbCrLf, "")
-sNewFileContent = Replace(sNewFileContent, "\", "\\")
 Set oFile = oFSO.OpenTextFile(sFilename, ForWriting)
 oFile.Write sNewFileContent
 oFile.Close
