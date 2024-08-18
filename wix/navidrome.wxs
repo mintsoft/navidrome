@@ -22,7 +22,7 @@
 	<Property Id='DiskPrompt' Value="Navidrome Install [1]" />
 	<Property Id="REBOOT" Value="ReallySuppress" />
 
-	<Property Id="ND_PORT" Value="8585" />
+	<Property Id="ND_PORT" Value="4533" />
 	<Property Id="ND_MUSICFOLDER" Value="C:\Music" />
 	<Property Id="ND_DATAFOLDER" Value="C:\ProgramData\Navidrome" />
 
@@ -62,6 +62,7 @@
 						Start='auto'
 						Type='ownProcess'
 						Vital='yes'
+						Arguments='--configfile &quot;[INSTALLDIR]navidrome.toml&quot;'
 					/>
 					<ServiceControl Id='StartNavidromeService' Start='install' Stop='both' Remove='uninstall' Name='$(var.ProductName)' Wait='yes' />
 				</Component>
