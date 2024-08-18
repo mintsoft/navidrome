@@ -71,14 +71,14 @@
 		</Directory>
 	</Directory>
 	
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;'>Installed</CustomAction>
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;' />
 	
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
 	</InstallUISequence>
 
 	<InstallExecuteSequence>
-		<Custom Action="HackIniIntoTOML" After="WriteIniValues" />
+		<Custom Action="HackIniIntoTOML" After="WriteIniValues">NOT Installed AND NOT REMOVE</Custom>
 	</InstallExecuteSequence>
 
 	<Feature Id='Complete' Level='1'>
