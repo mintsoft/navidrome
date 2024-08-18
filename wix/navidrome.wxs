@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='windows-1252'?>
 <?if $(var.Platform) = x64 ?>
 	<?define ProductName = "Navidrome" ?>
-	<?define UpgradeCode = "b54dbfd6-7377-4e4e-b47b-e1e16f85716c" ?>
+	<?define UpgradeCode = "d6f07b26-ba87-4e87-9bb2-74e352a56e3f" ?>
 	<?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
 	<?define Win64 = 'yes' ?>
 <?else ?>
 	<?define ProductName = "Navidrome (x86)" ?>
-	<?define UpgradeCode = "c4028a36-f78c-4a9e-8769-6424a505ce72" ?>
+	<?define UpgradeCode = "778640e8-97db-46cd-8c36-4801446011aa" ?>
 	<?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
 	<?define Win64 = "no" ?>
 <?endif ?>
@@ -34,25 +34,25 @@
 		<Directory Id="$(var.PlatformProgramFilesFolder)">
 			<Directory Id='INSTALLDIR' Name='Navidrome'>
 
-				<Component Id='LICENSEFile' Guid='aee053cf-73c2-4fed-b7e5-bc76e34797e6' Win64="$(var.Win64)">
+				<Component Id='LICENSEFile' Guid='1f6ee736-4182-4f27-a8d7-9cf5e94987f2' Win64="$(var.Win64)">
 					<File Id='LICENSE' Name='LICENSE' DiskId='1' Source='LICENSE' KeyPath='yes' />
 				</Component>
 
-				<Component Id='README.mdFile' Guid='88501e6f-b777-40af-b7c7-0b97ce318a6c' Win64="$(var.Win64)">
+				<Component Id='README.mdFile' Guid='a0777145-f5a8-4f75-ad45-e6285ea9ed0c' Win64="$(var.Win64)">
 					<File Id='README.md' Name='README.md' DiskId='1' Source='README.md' KeyPath='yes' />
 				</Component>
 
-				<Component Id='replace.vbsFile' Guid='8f3a9da9-fa7c-4084-84d8-381dcbe05c83' Win64="$(var.Win64)">
+				<Component Id='replace.vbsFile' Guid='77e039c0-53d3-455d-9f00-2ef3ee484bfe' Win64="$(var.Win64)">
 					<File Id='replace.vbs' Name='replace.vbs' DiskId='1' Source='replace.vbs' KeyPath='yes' />
 				</Component>
 
-				<Component Id="Configuration" Guid="90b433d1-b6b4-4e05-a3ed-0b2d422d20b3" Win64="$(var.Win64)">
+				<Component Id="Configuration" Guid="ac73bdd9-bc47-4867-a927-5054945931c3" Win64="$(var.Win64)">
 					<IniFile Id="ConfigurationPort" Name="navidrome.toml" Action="createLine" Directory="INSTALLDIR" Key="Port" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_PORT]&quot;" />
 					<IniFile Id="ConfigurationMusicDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="MusicFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_MUSICFOLDER]&quot;" />
 					<IniFile Id="ConfigurationDataDir" Name="navidrome.toml" Action="addLine" Directory="INSTALLDIR" Key="DataFolder" Section="MSI_PLACEHOLDER_SECTION" Value="&quot;[ND_DATAFOLDER]&quot;" />
 				</Component>
 
-				<Component Id='MainExecutable' Guid='c6a59257-d304-4ebc-8d98-440d0ec5b9b9' Win64="$(var.Win64)">
+				<Component Id='MainExecutable' Guid='96b07e7e-0ef6-407d-9350-535bb6111461' Win64="$(var.Win64)">
 					<File Id='NavidromeExe' Name='Navidrome.exe' DiskId='1' Source='navidrome.exe' KeyPath='yes' />
 					<ServiceInstall
 						Description='Navidrome - Your Personal Streaming Service'
