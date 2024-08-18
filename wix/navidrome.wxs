@@ -42,8 +42,8 @@
 					<File Id='README.md' Name='README.md' DiskId='1' Source='README.md' KeyPath='yes' />
 				</Component>
 
-				<Component Id='replace.vbsFile' Guid='2a5d3241-9a8b-4a8c-9edc-fbef1a030d4d' Win64="$(var.Win64)">
-					<File Id='replace.vbs' Name='replace.vbs' DiskId='1' Source='replace.vbs' KeyPath='yes' />
+				<Component Id='convertIniToToml.vbsFile' Guid='2a5d3241-9a8b-4a8c-9edc-fbef1a030d4d' Win64="$(var.Win64)">
+					<File Id='convertIniToToml.vbs' Name='convertIniToToml.vbs' DiskId='1' Source='convertIniToToml.vbs' KeyPath='yes' />
 				</Component>
 
 				<Component Id="Configuration" Guid="9e17ed4b-ef13-44bf-a605-ed4132cff7f6" Win64="$(var.Win64)">
@@ -71,7 +71,7 @@
 		</Directory>
 	</Directory>
 	
-	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]replace.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;' />
+	<CustomAction Id="HackIniIntoTOML" Impersonate="no" Property="CSCRIPT_LOCATION" Execute="deferred" ExeCommand='&quot;[INSTALLDIR]convertIniToToml.vbs&quot; &quot;[INSTALLDIR]navidrome.toml&quot;' />
 	
 	<InstallUISequence>
 		<Show Dialog="MyCustomPropertiesDlg" After="WelcomeEulaDlg" />
@@ -82,7 +82,7 @@
 	</InstallExecuteSequence>
 
 	<Feature Id='Complete' Level='1'>
-		<ComponentRef Id='replace.vbsFile' />
+		<ComponentRef Id='convertIniToToml.vbsFile' />
 		<ComponentRef Id='LICENSEFile' />
 		<ComponentRef Id='README.mdFile' />
 		<ComponentRef Id='Configuration'/>
