@@ -95,6 +95,7 @@ type configOptions struct {
 	Inspect                         inspectOptions
 	Subsonic                        subsonicOptions
 	LyricsPriority                  string
+	DLNAServer                      dlnaServerOptions
 
 	Agents       string
 	LastFM       lastfmOptions
@@ -204,6 +205,10 @@ type inspectOptions struct {
 	MaxRequests    int
 	BacklogLimit   int
 	BacklogTimeout int
+}
+
+type dlnaServerOptions struct {
+	Enabled bool
 }
 
 var (
@@ -534,6 +539,8 @@ func init() {
 	viper.SetDefault("inspect.backlogtimeout", consts.RequestThrottleBacklogTimeout)
 
 	viper.SetDefault("lyricspriority", ".lrc,.txt,embedded")
+
+	viper.SetDefault("dlnaserver.enabled", false)
 
 	// DevFlags. These are used to enable/disable debugging and incomplete features
 	viper.SetDefault("devlogsourceline", false)
